@@ -1,6 +1,6 @@
 package com.example.restauranteapi.config;
 
-import com.example.restauranteapi.model.UserEntity;
+import com.example.restauranteapi.model.Cliente;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +18,7 @@ public class JwtTokenProvider {
 
     public String  generateToken(Authentication authentication) {
 
-        UserEntity user = (UserEntity) authentication.getPrincipal();
+        Cliente user = (Cliente) authentication.getPrincipal();
         SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
         return Jwts.builder()

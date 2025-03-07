@@ -1,5 +1,6 @@
 package com.example.restauranteapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import lombok.AllArgsConstructor;
@@ -29,10 +30,13 @@ public class Reserva {
 
     private Long personas;
 
+
+    @JsonIgnore
     @ManyToOne(targetEntity = Cliente.class)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @JsonIgnore
     @ManyToOne(targetEntity = Mesa.class)
     @JoinColumn(name = "mesa_id")
 

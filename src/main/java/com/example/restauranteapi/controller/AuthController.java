@@ -4,8 +4,8 @@ import com.example.restauranteapi.DTO.LoginRequestDTO;
 import com.example.restauranteapi.DTO.LoginResponseDTO;
 import com.example.restauranteapi.DTO.UserRegisterDTO;
 import com.example.restauranteapi.config.JwtTokenProvider;
-import com.example.restauranteapi.model.UserEntity;
-import com.example.restauranteapi.repository.UserEntityRepository;
+import com.example.restauranteapi.model.Cliente;
+import com.example.restauranteapi.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ import java.util.Map;
 @RestController
 public class AuthController {
     @Autowired
-    private UserEntityRepository userRepository;
+    private ClienteRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -36,15 +36,15 @@ public class AuthController {
     public ResponseEntity<?> save(@RequestBody UserRegisterDTO userDTO) {
 
         try {
-            UserEntity userEntity = this.userRepository.save(
-                    UserEntity.builder()
+            Cliente cliente = this.userRepository.save(
+                    Cliente.builder()
                             .username(userDTO.getUsername())
                             .password(passwordEncoder.encode(userDTO.getPassword()))
                             .email(userDTO.getEmail())
                             .authorities(List.of("ROLE_USER", "ROLE_ADMIN"))
                             .build());
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("email", userEntity.getEmail()));
+            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("email", cliente.getEmail()));
 
         }catch (Exception e) {
 
@@ -61,8 +61,8 @@ public class AuthController {
             //Validamos al usuario en Spring (hacemos login manualmente)
             UsernamePasswordAuthenticationToken userPassAuthToken = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
             Authentication auth = authenticationManager.authenticate(userPassAuthToken);    //valida el usuario y devuelve un objeto Authentication con sus datos
-            //Obtenemos el UserEntity del usuario logueado
-            UserEntity user = (UserEntity) auth.getPrincipal();
+            //Obtenemos el Cliente del usuario logueado
+            Cliente user = (Cliente) auth.getPrincipal();
 
             //Generamos un token con los datos del usuario (la clase tokenProvider ha hemos creado nosotros para no poner aquí todo el código
             String token = this.tokenProvider.generateToken(auth);

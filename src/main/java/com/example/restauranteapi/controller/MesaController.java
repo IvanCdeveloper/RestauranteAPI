@@ -4,7 +4,6 @@ package com.example.restauranteapi.controller;
 import com.example.restauranteapi.model.Mesa;
 import com.example.restauranteapi.repository.ClienteRepository;
 import com.example.restauranteapi.repository.MesaRepository;
-import com.example.restauranteapi.repository.MesaRepository;
 import com.example.restauranteapi.repository.ReservaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
